@@ -34,7 +34,7 @@ How to Use:
   * Simply send the message to place your order.
 
 Contributing If you wish to contribute to this project, feel free to create a pull request with your suggested changes.
-Please ensure your contributions align with the purpose of the project.
+Please ensure your contributions align with the purpose of the project
 
 License:
    This project is open-source and available under the MIT License.
