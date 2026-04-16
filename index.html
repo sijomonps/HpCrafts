@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Font stylesheets -->
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Anton&family=Anton+SC&family=DM+Serif+Display:ital@0;1&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Racing+Sans+One&family=Satisfy&family=Style+Script&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     
     <!-- Meta tags -->
     <meta name="description" content="Your description here">
@@ -56,7 +56,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <div d-flex flex-row>
+                <div class="d-flex flex-row align-items-center">
                     <div><img src="https://i.pinimg.com/originals/a8/ef/be/a8efbe265df20b7701056143e4c73818.jpg" class="logo"></div>
                     <div>
 
@@ -82,10 +82,16 @@
     </nav>
     <div id="sectionhome">
         <div id="home" class="banner-section-bg-container d-flex justify-content-center flex-column">
-            <div class="text-center">
-                <h1 class="banner-heading mb-3">HP's Crafts </h1>
-                <p class="banner-caption mb-4">Unique Handmade Creations</p>
-
+            <span class="hero-shape hero-shape-1" aria-hidden="true"></span>
+            <span class="hero-shape hero-shape-2" aria-hidden="true"></span>
+            <span class="hero-shape hero-shape-3" aria-hidden="true"></span>
+            <span class="hero-shape hero-shape-4" aria-hidden="true"></span>
+            <div class="text-center hero-content">
+                <h1 class="banner-heading mb-3">Handmade with Love &amp; Creativity</h1>
+                <p class="hero-tagline mb-4">Every craft is made to celebrate emotions, memories, and meaningful moments.</p>
+                <div class="hero-cta-group d-flex justify-content-center">
+                    <a href="#exploreMenuSection" class="hero-btn hero-btn-primary">Explore Products</a>
+                </div>
             </div>
         </div>
         <div class="wcu-section pt-5 pb-5" id="wcuSection">
@@ -311,17 +317,28 @@
         </div>
         <div class="thanking-customers-section pt-5 pb-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
-                        <h1 class="thanking-customers-section-heading">
-                            Thank you for being a valuable customer to us. See you later
-                        </h1>
-                        <div class="d-md-none">
-                            <img src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-responsive-website/thanking-customers-section-img.png" class="thanking-customers-section-img" />
-                        </div>
+                <div class="thank-you-card text-center mx-auto">
+                    <div class="thank-you-icon-container">
+                        <i class="fa-regular fa-heart thank-you-icon" aria-hidden="true"></i>
                     </div>
-                    <div class="col-12 col-md-5 d-none d-md-block">
-                        <img src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-responsive-website/thanking-customers-section-img.png" class="thanking-customers-section-img" />
+                    <h1 class="thanking-customers-section-heading">
+                            Thank you for being a valuable customer to us. See you later
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="founder-section pt-5 pb-5">
+            <div class="container">
+                <h1 class="founder-section-heading text-center">Meet the Founder</h1>
+                <div class="founder-card row align-items-center no-gutters">
+                    <div class="col-12 col-md-5">
+                        <img src="https://i.pinimg.com/originals/a8/ef/be/a8efbe265df20b7701056143e4c73818.jpg" class="founder-image" alt="Founder Haripriya" />
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <div class="founder-content">
+                            <h2 class="founder-name">Haripriya</h2>
+                            <p class="founder-description">Haripriya is the creative mind behind Hp Crafts, passionate about making unique handmade gifts that bring joy and meaning to every occasion.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -362,6 +379,98 @@
     <div id="sectionpage1">
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var navbar = document.querySelector(".navbar");
+            var revealTargets = document.querySelectorAll(".wcu-section .col-12, .menu-item-card, .thank-you-card, .founder-card, .follow-us-section .col-12, .footer-section .col-12");
+            var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+            function updateNavbarState() {
+                if (!navbar) {
+                    return;
+                }
+                if (window.scrollY > 24) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            }
+
+            updateNavbarState();
+            window.addEventListener("scroll", updateNavbarState, {
+                passive: true
+            });
+
+            if ("IntersectionObserver" in window) {
+                revealTargets.forEach(function (target) {
+                    target.classList.add("reveal");
+                });
+
+                var revealObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("is-visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: "0px 0px -40px 0px"
+                });
+
+                revealTargets.forEach(function (target) {
+                    revealObserver.observe(target);
+                });
+
+                var sections = [];
+                navLinks.forEach(function (link) {
+                    var href = link.getAttribute("href");
+                    if (!href || href.charAt(0) !== "#") {
+                        return;
+                    }
+                    var section = document.querySelector(href);
+                    if (section) {
+                        sections.push({
+                            link: link,
+                            section: section
+                        });
+                    }
+                });
+
+                var navObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+
+                        sections.forEach(function (item) {
+                            item.link.classList.remove("active");
+                            var currentTag = item.link.querySelector(".sr-only");
+                            if (currentTag) {
+                                currentTag.remove();
+                            }
+                        });
+
+                        var match = sections.find(function (item) {
+                            return item.section === entry.target;
+                        });
+
+                        if (match) {
+                            match.link.classList.add("active");
+                        }
+                    });
+                }, {
+                    threshold: 0.45,
+                    rootMargin: "-30% 0px -45% 0px"
+                });
+
+                sections.forEach(function (item) {
+                    navObserver.observe(item.section);
+                });
+            }
+        });
+    </script>
 
 </body>
 
