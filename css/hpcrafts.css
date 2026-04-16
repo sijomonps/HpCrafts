@@ -1193,3 +1193,282 @@ body {
         min-height: 260px;
     }
 }
+
+/* Final refinement for requested image-hero premium layout */
+body {
+    background:
+        radial-gradient(circle at 10% 0%, rgba(191, 151, 109, 0.16), transparent 35%),
+        radial-gradient(circle at 95% 8%, rgba(160, 121, 88, 0.12), transparent 38%),
+        linear-gradient(180deg, #fdf9f4 0%, #f6ebdd 100%);
+}
+
+.hero-shape {
+    display: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    background: rgba(255, 251, 245, 0.22) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 249, 241, 0.96) !important;
+    border-color: rgba(174, 130, 89, 0.35);
+    box-shadow: 0 12px 30px rgba(67, 45, 24, 0.16);
+}
+
+.navbar-nav .nav-link {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.navbar-nav .nav-link::after {
+    left: 17%;
+    width: 66%;
+    bottom: 4px;
+}
+
+.navbar-nav .nav-link.active {
+    color: #2e2218 !important;
+    background: rgba(173, 126, 83, 0.13);
+}
+
+.banner-section-bg-container {
+    min-height: 100vh;
+    padding: clamp(7rem, 10vw, 8.8rem) 1rem clamp(4.5rem, 8vw, 6rem);
+    background-image:
+        linear-gradient(110deg, rgba(19, 14, 10, 0.58), rgba(46, 32, 21, 0.36)),
+        radial-gradient(circle at 22% 15%, rgba(255, 233, 203, 0.24), transparent 45%),
+        url("https://i.pinimg.com/736x/f1/6f/90/f16f90a59adf56d13a6f29b1ba925763.jpg");
+    background-size: 112% 112%;
+    background-position: center;
+    background-attachment: fixed;
+    animation: heroBackgroundZoom 18s ease-in-out infinite alternate;
+}
+
+.banner-section-bg-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 11, 7, 0.28) 0%, rgba(20, 13, 8, 0.5) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16);
+    position: relative;
+    z-index: 2;
+}
+
+.banner-heading {
+    color: #fff8ef;
+    font-size: clamp(2.4rem, 6vw, 5.2rem);
+    letter-spacing: 0.05em;
+    text-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+.hero-tagline {
+    color: rgba(255, 247, 234, 0.95);
+    max-width: 670px;
+    font-size: clamp(1rem, 1.95vw, 1.2rem);
+    font-weight: 500;
+}
+
+.hero-btn {
+    min-width: 230px;
+    padding: 0.95rem 1.7rem;
+}
+
+.hero-btn-primary {
+    background: linear-gradient(120deg, #c48853 0%, #986337 100%);
+    box-shadow: 0 14px 30px rgba(137, 92, 53, 0.38);
+}
+
+.hero-btn-primary:hover,
+.hero-btn-primary:focus-visible {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 0 5px rgba(196, 136, 83, 0.25), 0 18px 34px rgba(137, 92, 53, 0.45);
+}
+
+.thanking-customers-section {
+    background: linear-gradient(180deg, #f8efe3 0%, #f3e4d3 100%);
+}
+
+.thank-you-card {
+    max-width: 860px;
+    border-radius: 26px;
+    border: 1px solid rgba(168, 126, 84, 0.22);
+    background: linear-gradient(180deg, rgba(255, 252, 247, 0.96) 0%, rgba(251, 240, 224, 0.96) 100%);
+}
+
+.thanking-customers-section-img {
+    width: min(100%, 255px);
+    margin: 1.1rem auto 0;
+}
+
+.founder-section {
+    background: linear-gradient(180deg, #fff9f2 0%, #f8ecdc 100%);
+}
+
+.founder-card {
+    border-radius: 24px;
+    border: 1px solid rgba(158, 117, 78, 0.22);
+    box-shadow: 0 20px 36px rgba(76, 52, 30, 0.16);
+}
+
+.founder-description {
+    line-height: 1.75;
+}
+
+@keyframes heroBackgroundZoom {
+    0% {
+        background-size: 112% 112%;
+        background-position: 50% 48%;
+    }
+
+    100% {
+        background-size: 120% 120%;
+        background-position: 52% 52%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .banner-section-bg-container {
+        background-attachment: scroll;
+    }
+
+    .navbar-collapse {
+        transform-origin: top;
+        transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .navbar-collapse.collapse:not(.show) {
+        display: block;
+        height: 0 !important;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+    }
+
+    .navbar-collapse.collapsing {
+        height: auto !important;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    .navbar-collapse.collapse.show {
+        height: auto !important;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .banner-section-bg-container {
+        min-height: 88vh;
+        padding-top: 6.5rem;
+        padding-bottom: 3.2rem;
+    }
+
+    .hero-content {
+        border-radius: 18px;
+        padding: 1.1rem;
+    }
+
+    .hero-btn {
+        min-width: 190px;
+        width: auto;
+    }
+}
+
+/* UI issue fixes: hero scale, navbar behavior, and compact mobile cards */
+.banner-section-bg-container {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    animation: none !important;
+}
+
+.hero-content {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-nav .nav-link {
+    transition: color 0.22s ease, background-color 0.22s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus-visible {
+    transform: none;
+}
+
+.navbar-nav .nav-link::after {
+    transition: transform 0.22s ease;
+}
+
+@media (max-width: 767.98px) {
+    .banner-section-bg-container {
+        min-height: 100vh !important;
+        height: auto;
+        padding: 6.25rem 1rem 2.4rem !important;
+    }
+
+    .menu-item-card {
+        padding: 0.75rem !important;
+    }
+
+    .menu-item-image {
+        height: 180px !important;
+        object-fit: cover;
+    }
+
+    .menu-card-title {
+        margin-top: 0.72rem;
+        margin-bottom: 0.1rem;
+        font-size: 1rem;
+    }
+
+    .price {
+        font-size: 0.92rem;
+        margin-bottom: 0.08rem;
+    }
+
+    .pricecut {
+        font-size: 0.72rem;
+        margin-bottom: 0.58rem;
+    }
+
+    .view {
+        font-size: 0.72rem;
+        padding: 0.56rem 0.66rem;
+        margin-bottom: 0.58rem;
+    }
+
+    .menu-item-link {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+    }
+}

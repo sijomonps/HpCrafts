@@ -69,7 +69,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-link active" id="navItem1" href="#home">
+                    <a class="nav-link" id="navItem1" href="#home">
                         HOME
                         <span class="sr-only">(current)</span>
                     </a>
@@ -336,8 +336,8 @@
                     </div>
                     <div class="col-12 col-md-7">
                         <div class="founder-content">
-                            <h2 class="founder-name">Haripriya</h2>
-                            <p class="founder-description">Haripriya is the creative mind behind Hp Crafts, passionate about making unique handmade gifts that bring joy and meaning to every occasion.</p>
+                            <h2 class="founder-name">Haripriya Sajeev</h2>
+                            <p class="founder-description">Haripriya - the creative mind behind Hp Crafts, passionate about creating meaningful handmade gifts that bring happiness.</p>
                         </div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             var navbar = document.querySelector(".navbar");
             var revealTargets = document.querySelectorAll(".wcu-section .col-12, .menu-item-card, .thank-you-card, .founder-card, .follow-us-section .col-12, .footer-section .col-12");
-            var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+            var navLinks = Array.prototype.slice.call(document.querySelectorAll(".navbar-nav .nav-link"));
 
             function updateNavbarState() {
                 if (!navbar) {
@@ -397,10 +397,104 @@
                 }
             }
 
+            function clearActiveLinks() {
+                navLinks.forEach(function (link) {
+                    link.classList.remove("active");
+                });
+            }
+
+            function setActiveLink(link) {
+                clearActiveLinks();
+                if (link) {
+                    link.classList.add("active");
+                }
+            }
+
+            function getNavbarHeight() {
+                return navbar ? navbar.offsetHeight : 0;
+            }
+
+            var sections = navLinks.map(function (link) {
+                var href = link.getAttribute("href");
+                if (!href || href.charAt(0) !== "#") {
+                    return null;
+                }
+
+                var section = document.querySelector(href);
+                if (!section) {
+                    return null;
+                }
+
+                return {
+                    link: link,
+                    section: section
+                };
+            }).filter(Boolean);
+
+            function updateActiveByScroll() {
+                if (!sections.length) {
+                    clearActiveLinks();
+                    return;
+                }
+
+                var scrollPosition = window.pageYOffset + getNavbarHeight() + 24;
+                var currentLink = sections[0].link;
+
+                sections.forEach(function (item) {
+                    if (item.section.offsetTop <= scrollPosition) {
+                        currentLink = item.link;
+                    }
+                });
+
+                setActiveLink(currentLink);
+            }
+
+            function scrollToSection(section) {
+                var y = section.getBoundingClientRect().top + window.pageYOffset - getNavbarHeight() + 1;
+                window.scrollTo({
+                    top: Math.max(0, y),
+                    behavior: "smooth"
+                });
+            }
+
+            navLinks.forEach(function (link) {
+                var staleCurrentTag = link.querySelector(".sr-only");
+                if (staleCurrentTag) {
+                    staleCurrentTag.remove();
+                }
+
+                link.addEventListener("click", function (event) {
+                    var href = link.getAttribute("href");
+                    if (!href || href.charAt(0) !== "#") {
+                        return;
+                    }
+
+                    var target = document.querySelector(href);
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    scrollToSection(target);
+                    setActiveLink(link);
+
+                    if (window.jQuery && window.jQuery("#navbarNavAltMarkup").hasClass("show")) {
+                        window.jQuery("#navbarNavAltMarkup").collapse("hide");
+                    }
+                });
+            });
+
             updateNavbarState();
-            window.addEventListener("scroll", updateNavbarState, {
+            updateActiveByScroll();
+
+            window.addEventListener("scroll", function () {
+                updateNavbarState();
+                updateActiveByScroll();
+            }, {
                 passive: true
             });
+
+            window.addEventListener("resize", updateActiveByScroll);
 
             if ("IntersectionObserver" in window) {
                 revealTargets.forEach(function (target) {
@@ -422,51 +516,9 @@
                 revealTargets.forEach(function (target) {
                     revealObserver.observe(target);
                 });
-
-                var sections = [];
-                navLinks.forEach(function (link) {
-                    var href = link.getAttribute("href");
-                    if (!href || href.charAt(0) !== "#") {
-                        return;
-                    }
-                    var section = document.querySelector(href);
-                    if (section) {
-                        sections.push({
-                            link: link,
-                            section: section
-                        });
-                    }
-                });
-
-                var navObserver = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (!entry.isIntersecting) {
-                            return;
-                        }
-
-                        sections.forEach(function (item) {
-                            item.link.classList.remove("active");
-                            var currentTag = item.link.querySelector(".sr-only");
-                            if (currentTag) {
-                                currentTag.remove();
-                            }
-                        });
-
-                        var match = sections.find(function (item) {
-                            return item.section === entry.target;
-                        });
-
-                        if (match) {
-                            match.link.classList.add("active");
-                        }
-                    });
-                }, {
-                    threshold: 0.45,
-                    rootMargin: "-30% 0px -45% 0px"
-                });
-
-                sections.forEach(function (item) {
-                    navObserver.observe(item.section);
+            } else {
+                revealTargets.forEach(function (target) {
+                    target.classList.add("is-visible");
                 });
             }
         });
